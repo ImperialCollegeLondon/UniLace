@@ -1,0 +1,5 @@
+#request
+std_msgs/Bool render
+---
+#response
+std_msgs/String info

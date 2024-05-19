@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - robot
+  - eyelet
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - sub_eyelet
+  - Water
+  - UI
+  - gripper_l
+  - gripper_r
+  - arm_l
+  - arm_r
+  - eyelets
+  - aglets
+  - deformables
+  - mat
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

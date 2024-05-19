@@ -1,0 +1,5 @@
+#request
+geometry_msgs/PoseArray real_pos
+---
+#response
+geometry_msgs/PoseArray sim_pos

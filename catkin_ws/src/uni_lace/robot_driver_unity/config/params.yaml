@@ -1,0 +1,10 @@
+ROS_IP: localhost
+ROS_TCP_PORT: 10000
+
+UNITY_IP: '127.0.0.1'
+UNITY_SERVER_PORT: 5005
+
+ARM_NAMES: [/yumi/left_arm, /yumi/right_arm]
+GRIPPER_NAMES: [/yumi/left_gripper, /yumi/right_gripper]
+
+OBJECT_NAMES: [/target, /target_placement]

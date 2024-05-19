@@ -1,0 +1,15 @@
+material Wood
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture ../textures/wood_texture.jpg
+        // Repeat the texture over the surface (1 per face)
+        scale 0.25 0.25
+      }
+    }
+  }
+}

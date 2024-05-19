@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<launch>
+	<include file="$(find ros_tcp_endpoint)/launch/endpoint.launch">
+		<arg name="tcp_ip" value="localhost"/>
+	</include>
+
+	<include file="$(find robot_driver_unity)/launch/unity_interface.launch"/>
+
+	<node pkg="uni_lace" type="uni_lace_live.py" name="uni_lace_live" output="screen" />
+</launch>

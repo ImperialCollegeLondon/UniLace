@@ -1,0 +1,175 @@
+debug: false
+demo_mode: false
+# rope param
+rope_length: 1.36 # meters (length without the aglets)
+rope_radius: 0.015 
+rope_num_ctrl_pts: 10
+rope_pooled_particles: 0
+rope_resolution: 0.35
+rope_stretch_compliance: 0.0
+rope_stretching_scale: 1.0
+rope_bend_compliance: 0.0
+rope_max_bending: 0.005
+rope_particle_mass: 0.001
+rope_damping: 0.0
+rope_gravity: 10
+rope_material: "Shoelace"
+rope_collision_material: [0.1, 0] # [dynamic_friction, static_friction] (0-1)
+# scene objects param
+aglet_size: 1 # 0.03m by default
+aglet_mass: 0.05
+aglet_initial_position_l: {x: -2.1, y: 0.36, z: 2.75} # unity space
+aglet_initial_position_r: {x: 2.1, y: 0.36, z: 2.75} # unity space
+aglet_materials: [
+  "RedAglet", # even indices
+  "BlueAglet" # odd indices
+]
+aglet_controller_pid: [50, 0, 1] # unity space
+aglet_controller_tolerance: 0.01 # unity space
+aglet_translation_speed_limit: 0.4 # unity space
+aglet_rotation_speed_limit: 90 # degrees
+shoe_collision_material: [0.8, 0] # [dynamic_friction, static_friction]
+upper_particle_mass: 1
+upper_deformation_resistance: 1.0
+upper_max_deformation: 0.01
+upper_plastic_yield: 1
+upper_plastic_creep: 0.0
+upper_plastic_recovery: 0.8
+upper_lower_border_thresh: 0.015
+eyelet_mass: 0.001
+eyelet_outer_radius: 0.2
+eyelet_materials: [
+  "BlueEyelets", # even indices
+  "RedEyelets" # odd indices
+]
+# camera param
+cameras: [
+  {name: "unity_l515", 
+    type: "rgbd",
+    resolution: {x: 1280, y: 720},
+    fov: 45,
+    focus_distance: 10,
+    focus_length: 4.345584,
+    sensor_size: {x: 6.4, y: 3.6},
+    lens_shift: {x: 0.0, y: 0.0},
+    clipping_depth: [0.1, 10],
+    parent: "yumi_camera_link",
+    position: {x: 0.0, y: 0.0, z: 0.0},
+    rotation: {x: 0, y: 0, z: 0},
+    depth_noise_stddev: 0.0025, # l515 error rate: 0.25% of depth
+    frame_rate: 2 # omitted when using gym
+    },
+  {name: "unity_d435",
+    type: "rgbd",
+    resolution: {x: 848, y: 480},
+    fov: 45,
+    focus_distance: 10,
+    focus_length: 4.345584,
+    sensor_size: {x: 6.4, y: 3.6},
+    lens_shift: {x: 0.0, y: 0.0},
+    clipping_depth: [0.1, 10],
+    parent: "gripper_l_camera_link",
+    position: {x: 0.0, y: 0.0, z: 0.0},
+    rotation: {x: 0, y: 0, z: 0},
+    depth_noise_stddev: 0.02, # d435 error rate: 2% of depth
+    frame_rate: 2 # omitted when using gym
+    },
+  {name: "unity_d435_r",
+    type: "rgbd",
+    resolution: {x: 848, y: 480},
+    fov: 45,
+    focus_distance: 10,
+    focus_length: 4.345584,
+    sensor_size: {x: 6.4, y: 3.6},
+    lens_shift: {x: 0.0, y: 0.0},
+    clipping_depth: [0.1, 10],
+    parent: "gripper_r_camera_link",
+    position: {x: 0.0, y: 0.0, z: 0.0},
+    rotation: {x: 0, y: 0, z: 0},
+    depth_noise_stddev: 0.02, # d435 error rate: 2% of depth
+    frame_rate: 2 # omitted when using gym
+    },
+]
+# robot param
+robot: {
+name: 'yumi',
+base_link: 'yumi_base_link',
+pose:
+  {position: {x: 0.0, y: 0.1, z: -1.5},
+    rotation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+  },
+left_arm:
+  {arm_name: '/yumi/left_arm',
+    base_link: 'yumi_link_1_l',
+    joint_names: ['yumi_joint_1_l', 'yumi_joint_2_l','yumi_joint_7_l', 'yumi_joint_3_l', 
+                  'yumi_joint_4_l', 'yumi_joint_5_l', 'yumi_joint_6_l'], # required when using gym
+    initial_config: [0, -130, 135, 30, 0, 40, 0 ], # degrees
+    stiffness: 100000,
+    damping: 10000,
+    force_limit: 10000,
+    joint_friction: 0,
+    angular_damping: 0.5,
+    speed: 0.75,
+  },
+right_arm:
+  {arm_name: '/yumi/right_arm',
+    base_link: 'yumi_link_1_r',
+    joint_names: ['yumi_joint_1_r', 'yumi_joint_2_r', 'yumi_joint_7_r', 'yumi_joint_3_r', 
+                  'yumi_joint_4_r', 'yumi_joint_5_r', 'yumi_joint_6_r'],
+    initial_config: [0, -130, -135, 30, 0, 40, 0], # degrees
+    stiffness: 100000,
+    damping: 10000,
+    force_limit: 10000,
+    joint_friction: 0,
+    angular_damping: 0.5,
+    speed: 0.75
+  },
+left_gripper: 
+  {gripper_name: '/yumi/gripper_l',
+    base_link: 'gripper_l_base',
+    stiffness: 100000,
+    damping: 10000,
+    force_limit: 10000,
+    joint_friction: 0,
+    angular_damping: 0,
+    speed: 0.1
+  },
+right_gripper:
+  {gripper_name: '/yumi/gripper_r',
+    base_link: 'gripper_r_base',
+    stiffness: 100000,
+    damping: 10000,
+    force_limit: 10000,
+    joint_friction: 0,
+    angular_damping: 0,
+    speed: 0.1
+  }
+}
+# solver param
+solver_updater_substeps: 4
+solver_collision_margin: 0.02
+solver_collision_max_depenetration: 5
+solver_surface_collision_iterations: 8
+solver_distance_constraint_iterations: 12
+solver_shape_matching_iterations: 1
+solver_particle_collision_constraint_iterations: 5
+solver_collision_constraint_iterations: 5
+solver_damping: 0.9
+solver_gravity: 5 # 2 # rope has its own gravity
+# simulation param
+time_scale: 1.0
+time_step: 0.02 # do not change
+horizon: 10
+# task param
+num_eyelets: 10
+success_radius: 1.5 # (unity space) 10cm
+tension_thresh_tips: 1.5
+tension_thresh: 1.15
+tension_time_thresh: 10 # after how many frames is overstretch considered as failure
+aglet_collision_time_thresh: 10 # iterations for deciding aglet penetrations
+no_motion_time_thresh: 30 # (seconds) for failing the task due to no motion
+lace_thresh_z: 0.05 # (unity space) aglet-eyelet distance for deciding successful insertions
+lace_thresh_angle: 45 # (degrees) aglet-eyelet angle for deciding successful insertions
+random_range_shoe_position: {x: 0.1, y: 0, z: 0.1} # (unity space)
+random_range_shoelace_position: {x: 0.1, y: 0, z: 0.1} # (unity space)
+random_range_light_intensity: 0.1 # intensity range: [0, 8], default 1

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robot_driver_unity</name>
+  <version>0.0.0</version>
+  <author>Haining Luo</author>
+  <description>The robot_driver_unity package</description>
+  <maintainer email="hl18@ic.ac.uk">haining</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>control_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>simple_message</depend>
+  <depend>actionlib_msgs</depend>
+  <depend>actionlib</depend>
+  <depend>urdf</depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+</package>

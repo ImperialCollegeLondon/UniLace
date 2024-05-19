@@ -1,0 +1,6 @@
+#request
+std_msgs/String params
+---
+#response
+std_msgs/String obs
+std_msgs/UInt8MultiArray obs_raw

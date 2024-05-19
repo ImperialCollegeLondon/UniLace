@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <rosparam file="$(find robot_driver_unity)/config/params.yaml" command="load"/>
+
+	<group ns="yumi">
+		<group ns="left_arm">
+			<rosparam command="load" file="$(find robot_driver_unity)/config/joint_names_left.yaml" />
+
+			<node pkg="robot_driver_unity" type="joint_trajectory_action.py" name="joint_trajectory_action" output="screen"/>
+		</group>
+		<node pkg="topic_tools" type="relay" name="left_joints_relay" args="left_arm/joint_states joint_states"/>
+		<node pkg="topic_tools" type="relay" name="left_gripper_relay" args="gripper_l/joint_states gripper_states"/>
+
+		<group ns="right_arm">
+			<rosparam command="load" file="$(find robot_driver_unity)/config/joint_names_right.yaml" />
+
+			<node pkg="robot_driver_unity" type="joint_trajectory_action.py" name="joint_trajectory_action" output="screen"/>
+		</group>
+		<node pkg="topic_tools" type="relay" name="right_joints_relay" args="right_arm/joint_states joint_states"/>
+		<node pkg="topic_tools" type="relay" name="right_gripper_relay" args="gripper_r/joint_states gripper_states"/>
+	</group>
+
+</launch>
