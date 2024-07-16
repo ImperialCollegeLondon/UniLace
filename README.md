@@ -30,12 +30,12 @@ The project structure is as follows:
 
 This Unity project is composed of two scenes: **UniLaceLive** and **UniLaceGym**. An extra **Demo** scene is for fast showcasing simulated shoe lacing.
 
-Experiments included in the subminssion are completed with *UniLaceLive*.
-All scene are prebuilt and can be used without Unity.
+Experiments included in the submission are completed with *UniLaceLive*.
+All scenes are prebuilt and can be used without Unity.
 
 ## Prerequisites
 ### System requirements
-* This project has been teseted on Ubuntu 18.04, 20.04 and 22.04.
+* This project has been tested on Ubuntu 18.04, 20.04 and 22.04.
 * Docker and Nvidia-docker installed.
 * Unity installation is required ONLY for [Advanced Usage](#Advanced-Usage).
 
@@ -61,7 +61,7 @@ make install-baseline
 
 ## Running the project
 ### Demo scene
-The demo scene is created to showcase shoe lacing in a short time (less than 2 mins on the testing machine).
+The demo scene is created to showcase shoe lacing in a short time (less than 2 minutes on the testing machine).
 1. To run this scene, simply run the following command:
     ```
     make demo
@@ -81,9 +81,9 @@ This scene is where the baseline system is tested.
 The simulation can be stopped by pressing `Ctrl+C` in the terminal or by pressing `Esc` with the Unity window selected.
 
 ### UniLaceGym scene
-This scene is connected with a python wrapper. Running the testing policy will call `step` once which moves the robot into a different configuration and show the observations.
-Then it calls the `reset` function and moves the scene back to default setup. The scene will close itself after the reset function is called.
-1. Launch the python wrapper with the Unity executable:
+This scene is connected with a Python wrapper. Running the testing policy will call `step` once which moves the robot into a different configuration and shows the observations.
+Then it calls the `reset` function and moves the scene back to the default setup. The scene will close itself after the reset function is called.
+1. Launch the Python wrapper with the Unity executable:
     ```
     make start-gym
     ```
@@ -93,14 +93,14 @@ Then it calls the `reset` function and moves the scene back to default setup. Th
 ### Changing the rendering perspective
 The rendering perspective can be changed with keyboard inputs. This is activated by pressing the `Enter` key. 
 The perspective is controlled by:
-* `W` and `S` keys to move the camera forward and backward.
+* `W` and `S` keys to move the camera forward and backwards.
 * `A` and `D` keys to move the camera left and right.
 * `Space` and `Shift` keys to move the camera up and down.
 * Mouse movement to rotate the camera.
 Once the desired perspective is achieved, press `Q` to lock the camera.
 
 ### Changing parameters
-Simulation related parameters include: 
+Simulation-related parameters include: 
 * shoelace parameters
 * obi solver paramters
 * simulation parameters
@@ -108,20 +108,20 @@ Simulation related parameters include:
 * scene object parameters
 * randomised parameters
 
-All parameters are stored in `param.yaml`. More information of specific parameters is included in the file. The parameters are loaded into the simulation automatically and there is no need to rebuild the environments.
+All parameters are stored in `param.yaml`. More information on specific parameters is included in the file. The parameters are loaded into the simulation automatically and there is no need to rebuild the environments.
 
 
 ## UniLaceLive
 This scene considers the simulation as a live system. Simulation information is published in ROS topics.
 The baseline system is tested with this scene. Following is what happens when the simulation starts.
 
-* `ParamManager` queries parameters from param ROS service (therefor the ROS scripts must be launched fiirst). 
+* `ParamManager` queries parameters from the param ROS service (therefore the ROS scripts must be launched first). 
 * `Main` contains the main process of the simulation. It constructs the scene objects according to the parameters.
 * `ArmController` and `GripperController` interface with ROS to control the robot.
 * `ShoeManger` and `ShoelaceManager` control the construction of the shoe and shoelace.
 * `RGBCameraWrapper` and `DepthCameraWrapper` publish images to ROS.
 * `AgletCollisionManager` monitors the collision between aglets and grippers for attachments.
-* `ShoeUpperCollisionManager` monitors the collision between aglets and the eyestays to avoid penetration.
+* `ShoeUpperCollisionManager` monitors the collision between the aglets and the eyestays to avoid penetration.
 * `GroundTruthManager` publishes ground truth information as JSON string to ROS, including:
     * Aglet poses
     * Eyelet poses
@@ -130,14 +130,14 @@ The baseline system is tested with this scene. Following is what happens when th
     * Success
     * Shoelace branch length
 * `ObiColliderCreator` adds Obi colliders to target objects.
-* `FPSDisplay` controls information rendered to the topright corner of the screen.
+* `FPSDisplay` controls information rendered to the top-right corner of the screen.
 
 > **_NOTE:_** In this project, `Upper` is used interchangeably with `Eyestay`.
 
 ## UniLaceGym
-UniLaceGym contains same components with `UniLaceLive` but wrapped command and observation in `unity_step` and `unity_reset` ROS services. The python script `uni_lace_gym.py` in `uni_lace` package uses these services and wraps them into an OpenAI Gym environment.
+UniLaceGym contains the same components as `UniLaceLive` but wrapped command and observation in `unity_step` and `unity_reset` ROS services. The Python script `uni_lace_gym.py` in `uni_lace` package uses these services and wraps them into an OpenAI Gym environment.
 * Observations
-    * RGBD iamges
+    * RGBD images
     * Left arm joint states
     * Left gripper state
     * Right arm joint
@@ -156,20 +156,20 @@ UniLaceGym contains same components with `UniLaceLive` but wrapped command and o
 ### Shoelace Manager
 * This script controls generating the aglets, Obi Rope and related components. 
 * It provides functions to estimate the tension of the entire Obi Rope and the regions around two ends (last 5 elements), as well as the branch lengths after experiments.
-* It includes aglet collision managers `AgletCollisionManager` which controls the attachement of the aglets. In simulation, it is difficult to rely on friction to keep the aglet between fingers. Therefore, the aglets are attached to grippers and they are detached when the gripper opens or the rope end tension is over threshold after centain iterations.
+* It includes aglet collision managers `AgletCollisionManager` which controls the attachment of the aglets. In simulation, it is difficult to rely on friction to keep the aglet between fingers. Therefore, the aglets are attached to grippers and they are detached when the gripper opens or the rope end tension is over threshold after certain iterations.
 
 ### Shoe Manager
-* This script manages the eyelets, Obi Softbody (the eyestays, also named shoe uppers in the project) and related componenets.
-* It generates particle eyelet groups and the bottom layer particle group in runtime. The particle eyelet groups are connected to eyelet objects for retrieving the eyelets poses, the bottom layer particle group is used to attach the eyestays onto the shoe sole.
-* The shoe upper collision manager `ShoeUpperCollisionManager` is created in the main processes instead. They monitors the Obi particle collisions and reports instances involved with aglets and the shoe upper. If the collision distance is negative, the main process starts to monitor this collision. If it persists after certain iterations (10 by default), the aglet is consdiered to have penetrated the eyestay and the experiment is declared failed.
+* This script manages the eyelets, Obi Softbody (the eyestays, also named shoe uppers in the project) and related components.
+* It generates particle eyelet groups and the bottom layer particle group in runtime. The particle eyelet groups are connected to eyelet objects for retrieving the eyelet poses, the bottom layer particle group is used to attach the eyestays onto the shoe sole.
+* The shoe upper collision manager `ShoeUpperCollisionManager` is created in the main processes instead. They monitors the Obi particle collisions and reports instances involved with aglets and the shoe upper. If the collision distance is negative, the main process starts to monitor this collision. If it persists after certain iterations (10 by default), the aglet is considered to have penetrated the eyestay and the experiment is declared failed.
 
 ### Robot Controllers
 * There are two types of controllers: GripperController and ArmController.
 * Each controllers also has a ROS version which subscribe to trajectory commands in `trajectory_msgs/JointTrajectory` format and publishes the joint states in `sensor_msgs/JointState` format.
-* To incorparate the controllers into MoveIt planning framework, `joint_trajectory_action` servers are written in the `robot_driver_unity` package. They are just wrappers around the controllers inside Unity.
+* To incorporate the controllers into the MoveIt planning framework, `joint_trajectory_action` servers are written in the `robot_driver_unity` package. They are just wrappers around the controllers inside Unity.
 
 ### Cameras
-* There are two types of camera wrappers: RGBCameraWrapper and DepthCameraWrapper. They maintains the camera intrinsics and provide interfaces to retieves rendered images.
+* There are two types of camera wrappers: RGBCameraWrapper and DepthCameraWrapper. They maintain the camera intrinsics and provide interfaces to retrieve rendered images.
 * Each wrappers also has a ROS version which publishes the camera images in `sensor_msgs/Image` format with the camera intrinsics in `sensor_msgs/CameraInfo` format.
 * The depth images are encoded differently from normal depth images. Following are code snippets to convert images to numpy arrays:
     * Reading the RGB images to numpy arrays:
@@ -185,7 +185,7 @@ UniLaceGym contains same components with `UniLaceLive` but wrapped command and o
         ```
 
 ### Randomisation
-The randomisation is controlled by the `param-lve.yaml` file. The randomisation parameters are:
+The randomisation is controlled by the `param-live.yaml` file. The randomisation parameters are:
 * Shoe position
 * Shoelace position
 * Light intensity
@@ -195,23 +195,23 @@ The error rate is modelled after the [Intel RealSense D435i](https://www.intelre
 as well as the [Intel RealSense L515](https://dev.intelrealsense.com/docs/lidar-camera-l515-datasheet)  (0.25% of depth).
 
 ### Coordinate spaces
-* Unity uses left hand cooordinate system which is different from ROS. [`ROSTCPConnector.ROSGeometry`](https://github.com/Unity-Technologies/ROS-TCP-Connector/blob/main/ROSGeometry.md) is used to convert the coordinates. `Utils` also provides some functions for the convertion in different datatypes. 
+* Unity uses a left-hand coordinate system which is different from ROS. [`ROSTCPConnector.ROSGeometry`](https://github.com/Unity-Technologies/ROS-TCP-Connector/blob/main/ROSGeometry.md) is used to convert the coordinates. `Utils` also provides some functions for the conversion in different datatypes. 
 * Scale in this environment is 1/10 of the normal size (1 unit = 0.1 meter).
 
 ### Resources
 
 * Rendering Materials
     * The rope, aglet and eyelet materials are customisable. 
-    * The materials can be in the `param-lve.yaml` file. 
+    * The materials can be in the `param-live.yaml` file. 
     * Several materials are included in the `Resources/Materials` folder.
-    * New materials can be added by putting the material file in the `Resources/Materials` folder and adding the file name to the `param-lve.yaml` file.
+    * New materials can be added by putting the material file in the `Resources/Materials` folder and adding the file name to the `param-live.yaml` file.
 
 * Collision Materials
     * Friction is controlled by the Obi Collision Materials. The desk and the placemat use the same material `DeskObiMaterial` in `Resources/Materials`. 
-    * The materials for the shoe and shoelace are created online and can be tuned in the `param-lve.yaml` file.
+    * The materials for the shoe and shoelace are created online and can be tuned in the `param-live.yaml` file.
     * The friction is controlled by the `dynamicFriction` and `staticFriction` parameters. More information can be found in this [documentation](https://obi.virtualmethodstudio.com/manual/6.3/collisionmaterials.html).
-    * If the two objects involved in a collision have different materials, by default, the average frictions from the two materials is used.
-    * This can be changed by opening the Unity Project and modify the `ShoeManager` and `ShoelaceManager` scripts.
+    * If the two objects involved in a collision have different materials, by default, the average friction from the two materials is used.
+    * This can be changed by opening the Unity Project and modifying the `ShoeManager` and `ShoelaceManager` scripts.
 
 ## Advanced Usage
 The following changes would require making changes to and rebuilding the Unity project. 
@@ -224,7 +224,7 @@ The project is built on Unity 2022.3.22f1.
 * Upon first opening the project, Unity will ask to import TMP libraries. Click on `Import TMP Essentials`.
 
 ### Collision table
-To reduce computation, the objects involved in the simulation are separated into different groups and following rule is applied to disable unnecessary collision checking.
+To reduce computation, the objects involved in the simulation are separated into different groups and the following rule is applied to disable unnecessary collision checking.
 |        | Place Mat     | Rope Ends | Shoe Sole | Shoe Upper | Grippers | Eyelets | Aglets | Rope |
 |:------:|:----------:|:---------:|:---------:|:----------:|:--------:|:-------:|:------:|:----:|
 | Rope   |:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
@@ -237,18 +237,18 @@ To reduce computation, the objects involved in the simulation are separated into
 | Place Mat|:heavy_check_mark:|           |           |            |          |         |        |      |
 
 ### Customising shoe models
-Within the environment we included a scanned model of an Adidas Stan Smith. following steps are involved to replace this shoe model:
+Within the environment, we included a scanned model of an Adidas Stan Smith. following steps are involved to replace this shoe model:
 1. An enclosed shoe model, this can be from a 3D scan or CAD design software.
 1. Segment the model into 3 components: the shoe tongue, shoe upper and shoe sole. This can be done using Blender following this [tutorial](https://www.youtube.com/watch?v=fVOYv8HdMxI).
 1. Export the components in stl format and substitute the files in `Asset/Resources`.
-1. Create Obi Softbody blueprint with the Upper model. This can be done by following the [Obi Softbody tutorial](https://obi.virtualmethodstudio.com/manual/6.3/softbodies.html).
+1. Create an Obi Softbody blueprint with the Upper model. This can be done by following the [Obi Softbody tutorial](https://obi.virtualmethodstudio.com/manual/6.3/softbodies.html).
 
 ### Customising robots
-To use a different robot, following steps are required:
+To use a different robot, the following steps are required:
 
 1. Add the URDF into the Asset folder.
 1. Follow the [tutorial](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/urdf_importer/urdf_tutorial.md) to import the URDF to a scene and save it as a prefab in `Asset/Resources/Robots`.
-1. Modifying the joint names and params in the the config folder of `robot_unity_driver`.
+1. Modifying the joint names and params in the config folder of `robot_unity_driver`.
 1. Modifying the robot and joint names for the controller settings in the param file.
 
 ## Acknowledgement
