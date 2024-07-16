@@ -46,12 +46,14 @@ All scenes are prebuilt and can be used without Unity.
    ```
 2. Download the Docker image from Docker Hub
    ```
+   cd UniLace
    make install-from-hub
    ```
    (Alternatively,) Build the Docker image from the Dockerfile
    ```
-    make install-from-source
-    ```
+   cd UniLace
+   make install-from-source
+   ```
 3. Download prebuilt executables from this [link](https://1drv.ms/u/c/ff232397a18bbe91/EVao1qGjYFVPkw2sxmOxkBkBBgmLOGvA0kBKSFg_SM26gw?e=yyg40U). Extract to the UniLace folder. Check the folder structure to ensure the executables are in the correct location as shown in the [Project Structure](#Project-Structure).
 
 ### Installing baseline system
