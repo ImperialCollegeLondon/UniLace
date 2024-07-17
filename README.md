@@ -95,10 +95,10 @@ Then it calls the `reset` function and moves the scene back to the default setup
 ### Changing the rendering perspective
 The rendering perspective can be changed with keyboard inputs. This is activated by pressing the `Enter` key. 
 The perspective is controlled by:
-* `W` and `S` keys to move the camera forward and backwards.
-* `A` and `D` keys to move the camera left and right.
+* `W` and `S`, `A` and `D` keys to translate the camera forward and backward, left and right respectively.
 * `Space` and `Shift` keys to move the camera up and down.
-* Mouse movement to rotate the camera.
+* `I` and `K`, `J` and `L` keys to rotate the camera upward and downward, left and right respectively.
+
 Once the desired perspective is achieved, press `Q` to lock the camera.
 
 ### Changing parameters
