@@ -1,7 +1,8 @@
 # UniLace
 Simulation environment for submission **Benchmarking and Simulating Bimanual Robot Shoe Lacing** to *IEEE Robotics and Automation Letters*. 
 
-https://github.com/ImperialCollegeLondon/UniLace/assets/38414017/0a12d9aa-1b3d-44a7-ae74-686dc9b19a20
+https://github.com/user-attachments/assets/c65985c7-a8ca-4be4-94d5-fe680df4ea77
+
 
 ## Project Structure
 The project is structured with two main components: the ROS workspace and the Unity project. 
