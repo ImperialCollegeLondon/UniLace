@@ -1,5 +1,5 @@
 # UniLace
-Simulation environment for submission **Benchmarking and Simulating Bimanual Robot Shoe Lacing** to *IEEE Robotics and Automation Letters*. 
+Simulation environment for [**Benchmarking and Simulating Bimanual Robot Shoe Lacing**](https://ieeexplore.ieee.org/abstract/document/10629040) published on *IEEE Robotics and Automation Letters*. 
 
 https://github.com/user-attachments/assets/c65985c7-a8ca-4be4-94d5-fe680df4ea77
 
